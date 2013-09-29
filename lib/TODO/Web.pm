@@ -1,6 +1,5 @@
 package TODO::Web;
 
-
 use strict;
 use warnings;
 use utf8;
@@ -41,8 +40,9 @@ sub dbh {
 post '/input' => sub {
 	my ( $self, $c ) = @_;
 	my $td = $c->req->parameters_raw->{td};
+	my $dl = $c->req->parameters_raw->{dl};
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("insert into todo (todo) values ('$td')");
+	my $sth = $dbh->prepare("insert into todo (todo, date) values ('$td', '$dl')");
 	$sth->execute;
 	$sth->finish;
 	$dbh->disconnect;
@@ -53,7 +53,7 @@ $c->redirect('/');
 get '/' => [qw/set_title/] => sub {
 	my ( $self, $c ) = @_;
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("select * from todo");
+	my $sth = $dbh->prepare("select * from todo order by date");
 	$sth->execute;
 	my $row = $sth->fetchall_arrayref();
 	
@@ -84,10 +84,11 @@ $c->redirect('/');
 
 post '/change' => sub {
 	my ( $self, $c ) = @_;
-	my $change = $c->req->parameters_raw->{change};
+	my $changetd = $c->req->parameters_raw->{changetd};
+	my $changedl = $c->req->parameters_raw->{changedl};
 	my $id = $c->req->parameters_raw->{id};
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("update todo set todo='$change' where No=$id");
+	my $sth = $dbh->prepare("update todo set todo='$changetd', date='$changedl' where No=$id");
 	$sth->execute;
 	$sth->finish;
 	$dbh->disconnect;
