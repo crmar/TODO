@@ -40,19 +40,20 @@ sub dbh {
 
 post '/input' => sub {
 	my ( $self, $c ) = @_;
-	my $uid = $c->req->parameters_raw->{uid};
+	my $td = $c->req->parameters_raw->{td};
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("insert into test (uid) values ('$uid')");
+	my $sth = $dbh->prepare("insert into todo (todo) values ('$td')");
 	$sth->execute;
 	$sth->finish;
 	$dbh->disconnect;
+	$c->redirect('/');
 };
 
 
 get '/' => [qw/set_title/] => sub {
 	my ( $self, $c ) = @_;
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("select * from test");
+	my $sth = $dbh->prepare("select * from todo");
 	$sth->execute;
 	my $row = $sth->fetchall_arrayref();
 	
@@ -61,11 +62,26 @@ get '/' => [qw/set_title/] => sub {
 	#	my ($fno, $fid) = @$row;
 	#	$table_content .= "$fno : $fid\n";
 	#}
-	#$sth->finish;
+	$sth->finish;
 	$dbh->disconnect;
 	
 $c->render('index.tx', { greeting => "Hello", rows => $row });
 };
+
+
+get '/delete' => [qw/set_title/] => sub {
+	my ( $self, $c ) = @_;
+	my $id = $c->req->parameters_raw->{id};
+	my $dbh = $self->dbh([$self]);
+	my $sth = $dbh->prepare("delete from todo where No=$id");
+	$sth->execute;
+	$sth->finish;
+	$dbh->disconnect;
+	
+$c->redirect('/');
+};
+
+
 
 
 1;
