@@ -12,6 +12,12 @@ TODO:  <input type="text" name="td" size="15" maxlength="20">
 : for $rows -> $row{
 	<li><: $row[1] :>
 	<a href="/delete?id=<:$row[0]:>">delete</a>
+	
+	<form method="post" action="/change">
+	<input type="text" name="change" size="10" maxlength="20">
+	<input type="hidden" name="id" value="<:$row[0]:>">
+	<input type="submit" value="change"> 
+	</form>
 	<br></li>
 	: }
 </ol>	

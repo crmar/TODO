@@ -46,7 +46,7 @@ post '/input' => sub {
 	$sth->execute;
 	$sth->finish;
 	$dbh->disconnect;
-	$c->redirect('/');
+$c->redirect('/');
 };
 
 
@@ -80,6 +80,20 @@ get '/delete' => [qw/set_title/] => sub {
 	
 $c->redirect('/');
 };
+
+
+post '/change' => sub {
+	my ( $self, $c ) = @_;
+	my $change = $c->req->parameters_raw->{change};
+	my $id = $c->req->parameters_raw->{id};
+	my $dbh = $self->dbh([$self]);
+	my $sth = $dbh->prepare("update todo set todo='$change' where No=$id");
+	$sth->execute;
+	$sth->finish;
+	$dbh->disconnect;
+$c->redirect('/');
+};
+
 
 
 
