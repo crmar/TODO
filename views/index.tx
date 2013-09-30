@@ -1,9 +1,9 @@
 : cascade base
 : around content -> {
-<h1><: $greeting :> <: $c.stash.site_name :></h1>
+<h1>Add ToDo</h1>
 <form method="post" action="/input">
 <p>
-ToDo:  <input type="text" name="td" size="15" maxlength="20"><br>
+ToDo:  <input type="text" name="td"><br>
 Deadline:  <input type="date" name="dl"><br>
 Cattegory:  <input type="radio" name="cat" value="1" checked="checked"> Laboratory
 <input type="radio" name="cat" value="2"> Other<br>
@@ -15,22 +15,22 @@ Cattegory:  <input type="radio" name="cat" value="1" checked="checked"> Laborato
 <table border="1" width="900" cellspacing="0" cellpadding="5" bordercolor="#333333">
 <tr>
 <th bgcolor="#EE0000"><font color="#FFFFFF">ToDo</font></th>
-<th bgcolor="#EE0000" width="250"><font color="#FFFFFF">Deadline</font></th>
-<th bgcolor="#EE0000" width="250"><font color="#FFFFFF">Category</font></th>
-<th bgcolor="#EE0000" width="80"><font color="#FFFFFF">delete</font></th>
-<th bgcolor="#EE0000" width="250"><font color="#FFFFFF">edit</font></th>
+<th bgcolor="#EE0000" ><font color="#FFFFFF">Deadline</font></th>
+<th bgcolor="#EE0000" ><font color="#FFFFFF">Category</font></th>
+<th bgcolor="#EE0000" ><font color="#FFFFFF">delete</font></th>
+<th bgcolor="#EE0000" ><font color="#FFFFFF">edit</font></th>
 </tr>
 : for $rows -> $row{
 	<tr>
-	<td bgcolor="#FFFFFF" valign="top" width="250">
+	<td bgcolor="#FFFFFF" valign="top">
 	<: $row[1] :>
-	</td><td bgcolor="#FFFFFF" valign="top" width="80">
+	</td><td bgcolor="#FFFFFF" valign="top">
 	<: $row[2] :>
-	</td><td bgcolor="#FFFFFF" valign="top" width="80">
+	</td><td bgcolor="#FFFFFF" valign="top">
 	<: $row[3] :>
-	</td><td bgcolor="#FFFFFF" valign="top" width="80">
+	</td><td bgcolor="#FFFFFF" valign="top">
 	<a href="/delete?id=<:$row[0]:>">delete</a>
-	</td><td bgcolor="#FFFFFF" valign="top" width="250">
+	</td><td bgcolor="#FFFFFF" valign="top">
 	<form method="post" action="/change">
 	ToDo: <input type="text" name="changetd" size="10" maxlength="20">
 	Deadline: <input type="date" name="changedl">
@@ -41,5 +41,16 @@ Cattegory:  <input type="radio" name="cat" value="1" checked="checked"> Laborato
 	</tr>
 	: }
 </table>
-	
+<br>
+<br>
+
+<h2>Search</h2>
+<form method="post" action="/search"><br>
+Cattegory:  <input type="radio" name="cat" value="1" checked="checked"> Laboratory
+<input type="radio" name="cat" value="2"> Other
+<input type="submit" value="search"> 
+</form>
+<br>
+<br>
+<br>
 : }
