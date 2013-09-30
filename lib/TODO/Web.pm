@@ -41,8 +41,9 @@ post '/input' => sub {
 	my ( $self, $c ) = @_;
 	my $td = $c->req->parameters_raw->{td};
 	my $dl = $c->req->parameters_raw->{dl};
+	my $cat = $c->req->parameters_raw->{cat};
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("insert into todo (todo, date) values ('$td', '$dl')");
+	my $sth = $dbh->prepare("insert into todo (todo, date, cid) values ('$td', '$dl', $cat)");
 	$sth->execute;
 	$sth->finish;
 	$dbh->disconnect;
@@ -53,7 +54,8 @@ $c->redirect('/');
 get '/' => [qw/set_title/] => sub {
 	my ( $self, $c ) = @_;
 	my $dbh = $self->dbh([$self]);
-	my $sth = $dbh->prepare("select * from todo order by date");
+	my $sth = $dbh->prepare("select t.No, t.todo, t.date, c.cname from todo as t inner join category as c on t.cid = c.cid 
+	order by t.date");
 	$sth->execute;
 	my $row = $sth->fetchall_arrayref();
 	

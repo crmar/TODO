@@ -5,15 +5,18 @@
 <p>
 ToDo:  <input type="text" name="td" size="15" maxlength="20"><br>
 Deadline:  <input type="date" name="dl"><br>
+Cattegory:  <input type="radio" name="cat" value="1" checked="checked"> Laboratory
+<input type="radio" name="cat" value="2"> Other<br>
 <input type="submit" value="add"> 
 </p>
 </form>
 
 <h2> ToDo List</h2><br>
-<table border="1" width="650" cellspacing="0" cellpadding="5" bordercolor="#333333">
+<table border="1" width="900" cellspacing="0" cellpadding="5" bordercolor="#333333">
 <tr>
 <th bgcolor="#EE0000"><font color="#FFFFFF">ToDo</font></th>
 <th bgcolor="#EE0000" width="250"><font color="#FFFFFF">Deadline</font></th>
+<th bgcolor="#EE0000" width="250"><font color="#FFFFFF">Category</font></th>
 <th bgcolor="#EE0000" width="80"><font color="#FFFFFF">delete</font></th>
 <th bgcolor="#EE0000" width="250"><font color="#FFFFFF">edit</font></th>
 </tr>
@@ -23,6 +26,8 @@ Deadline:  <input type="date" name="dl"><br>
 	<: $row[1] :>
 	</td><td bgcolor="#FFFFFF" valign="top" width="80">
 	<: $row[2] :>
+	</td><td bgcolor="#FFFFFF" valign="top" width="80">
+	<: $row[3] :>
 	</td><td bgcolor="#FFFFFF" valign="top" width="80">
 	<a href="/delete?id=<:$row[0]:>">delete</a>
 	</td><td bgcolor="#FFFFFF" valign="top" width="250">
@@ -35,7 +40,6 @@ Deadline:  <input type="date" name="dl"><br>
 	</td>
 	</tr>
 	: }
-	
 </table>
 	
 : }
